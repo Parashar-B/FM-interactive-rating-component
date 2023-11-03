@@ -1,4 +1,14 @@
+import { useState } from "react";
+
 export default function Rating(props){
+
+    const [selectedRating, setSelectedRating] = useState(0);
+
+    function handleClickSubmit(){
+        props.submitHandler(true);
+        props.rootRatingHandler(selectedRating);
+    }
+
     return(
         <div className="w-full h-full  px-[2rem]">
             <div className="h-[18%] ">
@@ -25,7 +35,11 @@ export default function Rating(props){
                 {
                     [1,2,3,4,5].map((num,index)=>{
                         return(
-                            <button key={index} className="w-[50px] h-[50px] bg-[#29323d] rounded-full flex items-center justify-center text-[#959eac] font-semibold">
+                            <button key={index} className={`w-[50px] h-[50px] ${selectedRating === num ? 'bg-[#959eac] text-white' : 'bg-[#29323d] text-[#959eac]'}  hover:bg-[#fb7413] rounded-full flex items-center justify-center hover:text-white font-medium`}
+                                onClick={()=>{
+                                    setSelectedRating(num);
+                                }}
+                            >
                                 <span>{num}</span>
                             </button>
                         )
@@ -33,7 +47,9 @@ export default function Rating(props){
                 }
             </div>
             <div className="h-[20%]  flex items-center">
-                <button className="bg-[#fb7413] text-white w-full py-[0.5rem] rounded-full">SUBMIT</button>
+                <button className="bg-[#fb7413] hover:bg-white text-white hover:text-[#fb7413] hover:font-bold w-full text-[0.9rem] h-[60%] rounded-full tracking-widest"
+                    onClick={handleClickSubmit}
+                >SUBMIT</button>
             </div>
         </div>
     )
